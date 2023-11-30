@@ -5,13 +5,13 @@ import UserItem from "./UserItem";
 import GithubContext from "../../context/github/GithubContext";
 
 function UserResults() {
-  const { users, loading, fetchUsers } = useContext(GithubContext);
+  const { users, loading } = useContext(GithubContext);
   // const [users, setUsers] = useState([]);
   // const [loaing, setLoading] = useState(true); // 시작시 깃허브에서 데이터를 자겨옴(작업중 true)
 
-  useEffect(() => {
-    fetchUsers();
-  }, []); //앱 시작시 실행됨
+  // useEffect(() => {
+  //   fetchUsers();
+  // }, []); //앱 시작시 실행됨
 
   // const fetchUsers = async () => {
   //   //console.log(`${import.meta.env.VITE_GITHUB_URL}/users`);

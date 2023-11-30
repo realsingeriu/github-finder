@@ -18,7 +18,7 @@ export const GithubProvider = ({ children }) => {
   const [state, dispatch] = useReducer(githubReducer, initialState);
 
   const fetchUsers = async () => {
-    //setLoading(); // loading상태를 true로 업데이트
+    setLoading(); // loading상태를 true로 업데이트
     const response = await fetch(`${GITHUB_URL}/users`, {
       headers: {
         Authorization: `token ${GITHUB_TOKEN}`,
