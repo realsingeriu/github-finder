@@ -17,34 +17,37 @@ export const GithubProvider = ({ children }) => {
   };
   const [state, dispatch] = useReducer(githubReducer, initialState);
 
-  const fetchUsers = async () => {
+  const searchUsers = async (text) => {
     setLoading(); // loading상태를 true로 업데이트
-    const response = await fetch(`${GITHUB_URL}/users`, {
+    const params = new URLSearchParams({
+      q: text,
+    });
+
+    const response = await fetch(`${GITHUB_URL}/search/users?${params}`, {
       headers: {
         Authorization: `token ${GITHUB_TOKEN}`,
       },
     });
-    const data = await response.json();
+    const { items } = await response.json(); //  data 객체를 분해(destructure)해서 그 안의 items만 가져온다
 
     // setUsers(data);
     // setLoading(false); // 데이터 로딩완료
     dispatch({
       type: "GET_USERS",
-      payload: data,
+      payload: items,
     });
-    //로딩상태를 true로 업데이트하기 위한 dispatch
-    const setLoading = () =>
-      dispatch({
-        type: "SET_LOADING",
-      });
   };
-
+  //로딩상태를 true로 업데이트하기 위한 dispatch
+  const setLoading = () =>
+    dispatch({
+      type: "SET_LOADING",
+    });
   return (
     <GithubContext.Provider
       value={{
         users: state.users,
         loading: state.loading,
-        fetchUsers,
+        searchUsers,
       }}
     >
       {children}
