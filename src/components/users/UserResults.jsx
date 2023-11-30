@@ -6,6 +6,7 @@ import UserItem from "./UserItem";
 function UserResults() {
   const [users, setUsers] = useState([]);
   const [loaing, setLoading] = useState(true); // 시작시 깃허브에서 데이터를 자겨옴(작업중 true)
+
   useEffect(() => {
     fetchUsers();
   }, []); //앱 시작시 실행됨
