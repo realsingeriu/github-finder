@@ -63,18 +63,25 @@ export const GithubProvider = ({ children }) => {
   //특정 단어로 유저찾기
   const getUserRepos = async (login) => {
     setLoading();
-
-    const response = await fetch(`${GITHUB_URL}/users/${login}/repos`, {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`,
-      },
+    // 최근 생성한 10개의 리포를 가져오도록 설정
+    const pararms = new URLSearchParams({
+      sort: "created",
+      per_page: 10,
     });
+
+    const response = await fetch(
+      `${GITHUB_URL}/users/${login}/repos?${pararms}`,
+      {
+        headers: {
+          Authorization: `token ${GITHUB_TOKEN}`,
+        },
+      }
+    );
     const data = await response.json();
 
     dispatch({
       type: "GET_REPOS",
       payload: data,
-      loading: false,
     });
   };
 
@@ -98,6 +105,7 @@ export const GithubProvider = ({ children }) => {
         searchUsers,
         clearUsers,
         getUser,
+        getUserRepos,
       }}
     >
       {children}
