@@ -69,6 +69,10 @@ function User() {
                 )}
               </h1>
               <p>{bio}</p>
+              <p>
+                github 유저들을 서치하고 검색한 유저가 올린 repoList중 원하는
+                리포가 있다면 바로 링크 타고 갈 수 있게 설정 했음.
+              </p>
               <div className="mt-4 card-actions">
                 <a
                   href={html_url}
