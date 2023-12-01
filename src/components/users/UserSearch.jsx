@@ -1,10 +1,12 @@
 import React, { useContext, useState } from "react";
 import GithubContext from "../../context/github/GithubContext";
+import AlertContext from "../../context/alert/AlertContext";
 
 function UserSearch() {
   const [text, setText] = useState("");
 
   const { users, searchUsers, clearUsers } = useContext(GithubContext);
+  const { setAlert } = useContext(AlertContext);
 
   const handleChange = (e) => {
     setText(e.target.value);
@@ -14,9 +16,9 @@ function UserSearch() {
     e.preventDefault();
 
     if (text === "") {
-      alert("내용을 입력해주세요");
+      setAlert("내용을 입력해주세요", "error");
     } else {
-      //유저찾기
+      // 검색어로 유저찾기
       searchUsers(text);
       setText("");
     }
