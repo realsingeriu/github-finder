@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import GithubContext from "../context/github/GithubContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 function User() {
   const { user, getUser } = useContext(GithubContext);
@@ -18,3 +18,4 @@ function User() {
     </h3>
   );
 }
+export default User;
