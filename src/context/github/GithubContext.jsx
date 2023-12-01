@@ -14,6 +14,7 @@ export const GithubProvider = ({ children }) => {
   const initialState = {
     users: [],
     user: {},
+    repos: [],
     loading: false, // 로딩상태 false
   };
   const [state, dispatch] = useReducer(githubReducer, initialState);
@@ -59,6 +60,24 @@ export const GithubProvider = ({ children }) => {
     }
   };
 
+  //특정 단어로 유저찾기
+  const getUserRepos = async (login) => {
+    setLoading();
+
+    const response = await fetch(`${GITHUB_URL}/users/${login}/repos`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+      },
+    });
+    const data = await response.json();
+
+    dispatch({
+      type: "GET_REPOS",
+      payload: data,
+      loading: false,
+    });
+  };
+
   const setLoading = () =>
     dispatch({
       type: "SET_LOADING",
@@ -74,6 +93,7 @@ export const GithubProvider = ({ children }) => {
       value={{
         users: state.users,
         user: state.user,
+        repos: state.repos,
         loading: state.loading,
         searchUsers,
         clearUsers,
