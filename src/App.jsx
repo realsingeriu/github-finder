@@ -5,6 +5,7 @@ import React from "react";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import Home from "./pages/Home";
+import Alert from "./components/layout/Alert";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <div className="flex flex-col justify-between h-screen">
         <Navbar title="깃허브" />
         <main className="container mx-auto px-3 pb-12">
+          <Alert />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
