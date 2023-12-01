@@ -13,6 +13,7 @@ export const GithubProvider = ({ children }) => {
 
   const initialState = {
     users: [],
+    user: {},
     loading: false, // 로딩상태 false
   };
   const [state, dispatch] = useReducer(githubReducer, initialState);
@@ -37,11 +38,26 @@ export const GithubProvider = ({ children }) => {
       payload: items,
     });
   };
-  //로딩상태를 true로 업데이트하기 위한 dispatch
-  const setLoading = () =>
-    dispatch({
-      type: "SET_LOADING",
+
+  const getUser = async (login) => {
+    setLoading(); // loading상태를 true로 업데이트
+
+    const response = await fetch(`${GITHUB_URL}/users/${login}`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+      },
     });
+    //유저를 못찾은 경우 못찾음 페이지 표시, 찾았을경우 dispatch로 user를 업데이트
+    if (response.status === 404) {
+      window.location = "/notfound";
+    } else {
+      const data = await response.json();
+      dispatch({
+        type: "GET_USER",
+        payload: data,
+      });
+    }
+  };
 
   const clearUsers = () =>
     dispatch({
@@ -51,9 +67,11 @@ export const GithubProvider = ({ children }) => {
     <GithubContext.Provider
       value={{
         users: state.users,
+        user: state.user,
         loading: state.loading,
         searchUsers,
         clearUsers,
+        getUser,
       }}
     >
       {children}
